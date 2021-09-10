@@ -43,8 +43,14 @@ const http = axios.create({
     }
 });
 
+let counter = 0;
+const maxRequest = 1000;
 const sendRequest = async () => {
     try {
+        if (counter >= maxRequest) {
+            console.log('Max request reached');
+            process.exit(0);
+        }
         const formData = new FormData();
         formData.append('JqUsername', generateUsername());
         formData.append('JqPass', generatePassword());
@@ -52,14 +58,17 @@ const sendRequest = async () => {
 
         const { data } = await http.post('/SaveData', formData);
         console.log(data);
+        counter++;
     } catch (error) {
-        console.log(error.response ? error.response.data : error);
+        console.warn(error.response ? error.response.data : error.message);
     }
 };
 
-for (let index = 0; index < 100; index++) {
-    sendRequest();
-}
+setInterval(sendRequest, 250);
+
+// for (let index = 0; index < 100; index++) {
+//     sendRequest();
+// }
 
 
 // console.log(generatePlatform());
