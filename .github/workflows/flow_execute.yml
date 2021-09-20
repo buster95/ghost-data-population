@@ -3,8 +3,8 @@ name: Run Request
 on:
   push:
     branches: ["*"]
-  schedule:
-    - cron: "*/30 * * * *"
+  # schedule:
+    # - cron: "*/30 * * * *"
 
 jobs:
   Send:
@@ -16,5 +16,5 @@ jobs:
         with:
           node-version: "14"
       - run: npm install
-      - run: npm start
-        timeout-minutes: 20
+      # - run: npm start
+        # timeout-minutes: 20
